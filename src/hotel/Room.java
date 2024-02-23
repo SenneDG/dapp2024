@@ -1,16 +1,19 @@
 package hotel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Room {
+public class Room implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private Integer roomNumber;
 	private List<BookingDetail> bookings;
 
 	public Room(Integer roomNumber) {
 		this.roomNumber = roomNumber;
-		bookings = new ArrayList<BookingDetail>();
+		bookings = new ArrayList<>();
 	}
 
 	public Integer getRoomNumber() {

@@ -1,0 +1,12 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://foodmenu.io/gt/webservice">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <web:AddOrderRequest>
+            <web:order>
+                <web:orderId>123456</web:orderId>
+                <web:mealName>Steak</web:mealName>
+                <web:quantity>2</web:quantity>
+            </web:order>
+        </web:AddOrderRequest>
+    </soapenv:Body>
+</soapenv:Envelope>

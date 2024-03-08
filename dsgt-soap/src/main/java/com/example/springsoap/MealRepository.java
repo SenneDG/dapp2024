@@ -35,7 +35,7 @@ public class MealRepository {
         b.setDescription("Portobello Mushroom Burger");
         b.setMealtype(Mealtype.VEGAN);
         b.setKcal(637);
-        a.setPrice(2);
+        b.setPrice(2);
 
 
         meals.put(b.getName(), b);
@@ -45,7 +45,7 @@ public class MealRepository {
         c.setDescription("Fried fish with chips");
         c.setMealtype(Mealtype.FISH);
         c.setKcal(950);
-        a.setPrice(3);
+        c.setPrice(3);
 
 
         meals.put(c.getName(), c);
@@ -67,12 +67,24 @@ public class MealRepository {
     }
 
     public Meal findCheapestMeal() {
-        if (meals == null) return null;
-        if (meals.size() == 0) return null;
+        if (meals == null || meals.isEmpty()) {
+            return null;
+        }
 
-        var values = meals.values();
-        return values.stream().min(Comparator.comparing(Meal::getPrice)).orElseThrow(NoSuchElementException::new);
+        return meals.values().stream()
+                .min(Comparator.comparingDouble(Meal::getPrice))
+                .orElseThrow(NoSuchElementException::new);
     }
 
+    public String addOrder(Order order) {
+        String mealName = order.getMealName();
+        Meal meal = meals.get(mealName);
+
+        if (meal != null) {
+            return "Order added successfully";
+        } else {
+            return "Meal not found"; // or any appropriate error message
+        }
+    }
 
 }

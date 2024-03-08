@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
 
 import java.util.*;
 
@@ -66,4 +67,23 @@ public class MealsRestController {
         return mealToEntityModel(largestMeal.getId(), largestMeal);
     }
 
+    @PostMapping("/rest/meals")
+    @ResponseStatus(HttpStatus.CREATED)
+    EntityModel<Meal> addMeal(@RequestBody Meal meal) {
+        mealsRepository.addMeal(meal);
+        return EntityModel.of(meal);
+    }
+
+    @PutMapping("/rest/meals/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    EntityModel<Meal> updateMeal(@PathVariable String id, @RequestBody Meal updatedMeal) {
+        mealsRepository.updateMeal(id, updatedMeal);
+        return EntityModel.of(updatedMeal);
+    }
+
+    @DeleteMapping("/rest/meals/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void deleteMeal(@PathVariable String id) {
+        mealsRepository.deleteMeal(id);
+    }
 }

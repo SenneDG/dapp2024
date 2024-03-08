@@ -66,4 +66,27 @@ public class MealsRepository {
                 .max(Comparator.comparingDouble(Meal::getKcal))
                 .orElse(null);
     }
+
+    public void addMeal(Meal meal) {
+        Assert.notNull(meal, "The meal object must not be null");
+        Assert.notNull(meal.getId(), "The meal id must not be null");
+        meals.put(meal.getId(), meal);
+    }
+
+    public void updateMeal(String id, Meal updatedMeal) {
+        Assert.notNull(id, "The meal id must not be null");
+        Assert.notNull(updatedMeal, "The updated meal object must not be null");
+        Assert.notNull(updatedMeal.getId(), "The updated meal id must not be null");
+
+        if (!meals.containsKey(id)) {
+            throw new IllegalArgumentException("Meal with id " + id + " does not exist.");
+        }
+
+        meals.put(id, updatedMeal);
+    }
+
+    public void deleteMeal(String id) {
+        Assert.notNull(id, "The meal id must not be null");
+        meals.remove(id);
+    }
 }

@@ -30,4 +30,22 @@ public class MealsRestRpcStyleController {
     Collection<Meal> getMeals() {
         return mealsRepository.getAllMeal();
     }
+
+    @GetMapping("/restrpc/meals/cheapest")
+    Meal getCheapestMeal() {
+        Meal cheapestMeal = mealsRepository.getCheapestMeal();
+        if (cheapestMeal == null) {
+            throw new MealNotFoundException("No meals found.");
+        }
+        return cheapestMeal;
+    }
+
+    @GetMapping("/restrpc/meals/largest")
+    Meal getLargestMeal() {
+        Meal largestMeal = mealsRepository.getLargestMeal();
+        if (largestMeal == null) {
+            throw new MealNotFoundException("No meals found.");
+        }
+        return largestMeal;
+    }
 }

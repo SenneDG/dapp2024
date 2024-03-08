@@ -48,4 +48,22 @@ public class MealsRestController {
                 linkTo(methodOn(MealsRestController.class).getMeals()).withRel("rest/meals"));
     }
 
+    @GetMapping("/rest/meals/cheapest")
+    EntityModel<Meal> getCheapestMeal() {
+        Meal cheapestMeal = mealsRepository.getCheapestMeal();
+        if (cheapestMeal == null) {
+            throw new MealNotFoundException("No meals found.");
+        }
+        return mealToEntityModel(cheapestMeal.getId(), cheapestMeal);
+    }
+
+    @GetMapping("/rest/meals/largest")
+    EntityModel<Meal> getLargestMeal() {
+        Meal largestMeal = mealsRepository.getLargestMeal();
+        if (largestMeal == null) {
+            throw new MealNotFoundException("No meals found.");
+        }
+        return mealToEntityModel(largestMeal.getId(), largestMeal);
+    }
+
 }

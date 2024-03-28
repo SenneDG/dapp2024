@@ -1,0 +1,20 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="client">
+    <output-path>$PROJECT_DIR$/out/artifacts/client</output-path>
+    <root id="archive" name="client.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="directory" name="staff">
+        <element id="dir-copy" path="$PROJECT_DIR$/src/staff" />
+        <element id="dir-copy" path="$PROJECT_DIR$/out/staff" />
+      </element>
+      <element id="directory" name="hotel">
+        <element id="file-copy" path="$PROJECT_DIR$/src/hotel/BookingDetail.java" />
+        <element id="file-copy" path="$PROJECT_DIR$/out/hotel/BookingDetail.class" />
+        <element id="file-copy" path="$PROJECT_DIR$/src/hotel/BookingManagerInterface.java" />
+        <element id="file-copy" path="$PROJECT_DIR$/out/hotel/BookingManagerInterface.class" />
+      </element>
+    </root>
+  </artifact>
+</component>

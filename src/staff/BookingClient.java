@@ -7,11 +7,12 @@ import java.time.LocalDate;
 import java.util.Set;
 
 import hotel.BookingDetail;
+import hotel.BookingManager;
 import hotel.BookingManagerInterface;
 
 public class BookingClient extends AbstractScriptedSimpleTest {
 
-	private BookingManagerInterface bm = null;
+	BookingManagerInterface bm = null;
 
 	public static void main(String[] args) throws Exception {
 		BookingClient client = new BookingClient();
@@ -19,9 +20,12 @@ public class BookingClient extends AbstractScriptedSimpleTest {
 	}
 
 	public BookingClient() {
+		String serverHostname = "distrs.japaneast.cloudapp.azure.com";
+//		String serverHostname = "localhost";
+
 		try {
-			Registry registry = LocateRegistry.getRegistry("localhost", 1024);
-			bm = (BookingManagerInterface) registry.lookup("BookingManager");
+			Registry registry = LocateRegistry.getRegistry(serverHostname);
+			this.bm = (BookingManagerInterface) registry.lookup("BookingManager");
 		} catch (Exception exp) {
 			exp.printStackTrace();
 		}

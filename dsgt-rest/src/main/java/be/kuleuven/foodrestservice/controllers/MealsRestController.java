@@ -1,7 +1,9 @@
 package be.kuleuven.foodrestservice.controllers;
 
 import be.kuleuven.foodrestservice.domain.Meal;
+import be.kuleuven.foodrestservice.domain.Order;
 import be.kuleuven.foodrestservice.domain.MealsRepository;
+import be.kuleuven.foodrestservice.domain.OrderRepository;
 import be.kuleuven.foodrestservice.exceptions.MealNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
@@ -17,10 +19,12 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 public class MealsRestController {
 
     private final MealsRepository mealsRepository;
+    private final OrderRepository orderRepository;
 
     @Autowired
-    MealsRestController(MealsRepository mealsRepository) {
+    MealsRestController(MealsRepository mealsRepository, OrderRepository orderRepository) {
         this.mealsRepository = mealsRepository;
+        this.orderRepository = orderRepository;
     }
 
     @GetMapping("/rest/meals/{id}")
@@ -86,4 +90,16 @@ public class MealsRestController {
     void deleteMeal(@PathVariable String id) {
         mealsRepository.deleteMeal(id);
     }
+
+    @PostMapping("/rest/orders")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void orderMeal(@RequestBody Map<String, Object> orderData) {
+        Order order = new Order();
+        order.setAddress((String) orderData.get("address"));
+        order.setMealIds((List<String>) orderData.get("mealIds"));
+
+        orderRepository.addOrder(order);
+        System.out.println("Received order: " + order.getAddress() + ", Meals: " + order.getMealIds());
+    }
 }
+

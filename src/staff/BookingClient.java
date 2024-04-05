@@ -3,11 +3,12 @@ package staff;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Set;
 
 import hotel.BookingDetail;
-import hotel.BookingManager;
 import hotel.BookingManagerInterface;
 
 public class BookingClient extends AbstractScriptedSimpleTest {
@@ -21,7 +22,7 @@ public class BookingClient extends AbstractScriptedSimpleTest {
 
 	public BookingClient() {
 		String serverHostname = "distrs.japaneast.cloudapp.azure.com";
-//		String serverHostname = "localhost";
+//        String serverHostname = "localhost";
 
 		try {
 			Registry registry = LocateRegistry.getRegistry(serverHostname);
@@ -33,21 +34,40 @@ public class BookingClient extends AbstractScriptedSimpleTest {
 
 	@Override
 	public boolean isRoomAvailable(Integer roomNumber, LocalDate date) throws RemoteException {
-		return bm.isRoomAvailable(roomNumber, date);
+		Instant startTime = Instant.now();
+		boolean result = bm.isRoomAvailable(roomNumber, date);
+		Instant endTime = Instant.now();
+		long latency = Duration.between(startTime, endTime).toMillis();
+		System.out.println("isRoomAvailable latency: " + latency + " milliseconds");
+		return result;
 	}
 
 	@Override
 	public void addBooking(BookingDetail bookingDetail) throws RemoteException {
+		Instant startTime = Instant.now();
 		bm.addBooking(bookingDetail);
+		Instant endTime = Instant.now();
+		long latency = Duration.between(startTime, endTime).toMillis();
+		System.out.println("addBooking latency: " + latency + " milliseconds");
 	}
 
 	@Override
 	public Set<Integer> getAvailableRooms(LocalDate date) throws RemoteException {
-		return bm.getAvailableRooms(date);
+		Instant startTime = Instant.now();
+		Set<Integer> availableRooms = bm.getAvailableRooms(date);
+		Instant endTime = Instant.now();
+		long latency = Duration.between(startTime, endTime).toMillis();
+		System.out.println("getAvailableRooms latency: " + latency + " milliseconds");
+		return availableRooms;
 	}
 
 	@Override
 	public Set<Integer> getAllRooms() throws RemoteException {
-		return bm.getAllRooms();
+		Instant startTime = Instant.now();
+		Set<Integer> allRooms = bm.getAllRooms();
+		Instant endTime = Instant.now();
+		long latency = Duration.between(startTime, endTime).toMillis();
+		System.out.println("getAllRooms latency: " + latency + " milliseconds");
+		return allRooms;
 	}
 }
